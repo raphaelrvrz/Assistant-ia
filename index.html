@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <title>Installer Assistant IA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Literata', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        
+        .install-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #ffa07a);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 16px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 107, 53, 0.4);
+        }
+        
+        .install-btn:active {
+            transform: translateY(0);
+        }
+        
+        .install-btn.hidden {
+            display: none;
+        }
+        
+        .enter-btn {
+            display: inline-block;
+            background: #2a2a2a;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: 1px solid #3a3a3a;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .enter-btn:hover {
+            background: #3a3a3a;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #ff6b35;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-box li {
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+            font-size: 14px;
+            color: #c0c0c0;
+        }
+        
+        .info-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        .steps {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+        }
+        
+        .steps h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        
+        .step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: start;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #ff6b35, #ffa07a);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d0d0d0;
+        }
+        
+        .alternative {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .alternative h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .alternative p {
+            color: #a0a0a0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .alternative a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .success-message {
+            display: none;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid #4ade80;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            color: #4ade80;
+            font-size: 14px;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1>Assistant IA Personnel</h1>
+        <p class="subtitle">Propulsé par Claude - Ton assistant intelligent partout avec toi</p>
+        
+        <button class="install-btn" id="installBtn">
+            📥 Installer l'Application
+        </button>
+        
+        <a href="assistant-pwa.html" class="enter-btn">
+            🚀 Utiliser dans le navigateur
+        </a>
+        
+        <div class="success-message" id="successMsg">
+            ✅ Installation réussie ! L'app est maintenant sur ton écran d'accueil.
+        </div>
+        
+        <div class="info-box">
+            <h3>✨ Fonctionnalités</h3>
+            <ul>
+                <li>Conversations intelligentes avec Claude</li>
+                <li>Fonctionne comme une vraie application</li>
+                <li>Interface optimisée pour mobile</li>
+                <li>Historique sauvegardé localement</li>
+                <li>Mode sombre/clair</li>
+                <li>Notifications (si activées)</li>
+            </ul>
+        </div>
+        
+        <div class="steps">
+            <h3>Comment installer ?</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">
+                    Clique sur le bouton <strong>"Installer l'Application"</strong> ci-dessus
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">
+                    Confirme l'installation dans la popup qui apparaît
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">
+                    L'app s'ajoute automatiquement à ton écran d'accueil avec l'icône 🤖
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-text">
+                    Configure ta clé API Anthropic dans les paramètres (⚙️)
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-text">
+                    <strong>Commence à discuter !</strong> 🎉
+                </div>
+            </div>
+        </div>
+        
+        <div class="alternative">
+            <h3>🔧 Pour créer un fichier .apk</h3>
+            <p>Si tu veux un vrai fichier .apk à installer comme les apps du Play Store :</p>
+            <ol style="text-align: left; color: #a0a0a0; font-size: 14px; line-height: 1.8; padding-left: 20px;">
+                <li>Héberge cette app sur Netlify (guide dans HEBERGEMENT.md)</li>
+                <li>Va sur <a href="https://www.pwabuilder.com" target="_blank">PWABuilder.com</a></li>
+                <li>Colle l'URL de ton app Netlify</li>
+                <li>Clique sur "Package For Stores" → Android</li>
+                <li>Télécharge le fichier .apk généré</li>
+                <li>Installe-le sur ton S21 !</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        const successMsg = document.getElementById('successMsg');
+        
+        // Détecter si l'installation est disponible
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+            console.log('Installation disponible');
+        });
+        
+        // Bouton d'installation
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                // Si le prompt n'est pas disponible, rediriger vers l'app
+                alert('Pour installer : Menu (⋮) → "Ajouter à l\'écran d\'accueil"');
+                return;
+            }
+            
+            deferredPrompt.prompt();
+            
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('Installation acceptée');
+                successMsg.classList.add('show');
+                installBtn.style.display = 'none';
+            } else {
+                console.log('Installation refusée');
+            }
+            
+            deferredPrompt = null;
+        });
+        
+        // Vérifier si déjà installée
+        window.addEventListener('appinstalled', () => {
+            console.log('App installée !');
+            successMsg.classList.add('show');
+            installBtn.style.display = 'none';
+        });
+        
+        // Si accédé via l'app installée, rediriger
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            window.location.href = 'assistant-pwa.html';
+        }
+    </script>
+</body>
+</html>
